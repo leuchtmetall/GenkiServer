@@ -1,0 +1,54 @@
+extends ../shared/layout
+
+//- TODO get thumbnail images from clients
+block content
+	if v.error
+		.alert.alert-danger= v.error
+	h1= __('Content Display Management')
+
+	.panel.panel-default
+		//- .panel-heading abc
+		.panel-body
+			p Lorem Ipsum
+
+		table.table.table-hover
+			- each client, i in v.clients
+				tr(class=(client.name.toLowerCase()==='all' ? 'info' : ''))
+					td
+						h4= client.name + ' '
+					td
+						if client.file
+							a.btn.btn-default(href="/datac/" + client.name + "/" + client.file + '?token=' + utils.getToken(client.name), target="_blank")
+								= __('show content (%s)', client.filetype)
+					td
+						form(enctype="multipart/form-data", action="/display/upload", method="POST")
+							.alert.alert-success.hidden.uploadSuccess(data-index=i)
+								p success
+								p
+									button.btn.btn-success(data-index=i) ok
+							input(type="hidden",name="client",value=client.name)
+							input(type="hidden",name="redirect",value="1")
+							.uploaderContainer(data-index=i)
+								input.displayUpload(type="file", data-index=i, data-client=client.name,name="newContent")
+							input.btn.btn-primary.hidden(type="submit", value=__("uploadForm.submit"))
+	h2=__('Emergency Content')
+		.panel.panel-default
+			.panel-body
+				- each content in v.emergencyContent
+					form(action="/display/emergency", style="display: inline;", method="POST")
+						input(type="hidden", name="content" value=content)
+						input.btn.btn-default(type='submit', value=content, data-confirm=__('are you sure?'),
+							class=(content === v.activeEmergencyFile ? ' btn-warning' : '')
+						)=content
+					=' '
+				if v.hasActiveEmergencyFile
+					form(action="/display/emergency", style="display: inline;", method="POST")
+						input(type="hidden", name="content" value='off')
+						input.btn.btn-default.btn-success(type='submit', value=__('remove'), data-confirm=__('are you sure?'))
+
+
+
+
+
+
+

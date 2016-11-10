@@ -1,0 +1,51 @@
+extends ../shared/layout
+
+//- TODO display other data types
+block content
+	ol.breadcrumb
+		- var n = 0
+		if v.pathComponents.length == 0
+			li.active="Data"
+		else
+			li
+				a(href="/data?format=html")="Data"
+		while n < v.pathComponents.length - 1
+			- var relevantLength = v.pathComponents.length - n - 1
+			li
+				a(href="/data/" + v.pathComponents.slice(0, relevantLength).join('/') + "?format=html")=v.pathComponents[relevantLength - 1]
+			- n++
+		li.active=v.pathComponents[v.pathComponents.length - 1]
+	h1
+		if content.image
+			img(src="/data/" + v.path + '/' + content.image, style="width: 50px;")
+		=content.name
+
+	= content.kind
+	if content.kind == 'folder'
+		h3 Contents
+		- each item in content.contents
+			div
+				a(href="/data/" + (v.path ? v.path + '/' : "") + item.name + "?format=html")
+					if item.image
+						img(src="/data/" + (v.path ? v.path + '/' : "") + item.name + '/' + item.image, style="width: 50px;")
+					else
+						img(style="width: 50px;")
+					=item.name
+	else if content.kind == 'video'
+		- each item in content.contents
+			video(width=576, height=324, controls)
+				source(src="/data/" + (v.path ? v.path + '/' : "") + item)
+	else if content.kind == 'audio'
+		- each item in content.contents
+			=item + ":"
+			audio(controls)
+				source(src="/data/" + (v.path ? v.path + '/' : "") + item)
+			br
+	else if content.kind == 'slideshow' || content.kind == 'presentation' || content.kind == 'flashcards'
+		- each item in content.contents
+			img(src="/data/" + (v.path ? v.path + '/' : "") + item)
+			br
+
+
+	//- h3 Data
+	//- 	pre=JSON.stringify(content, null, 2)

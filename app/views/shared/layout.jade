@@ -1,0 +1,37 @@
+doctype html
+html(lang=locale)
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title= __('AppTitle')
+    link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/components/bootstrap-fileinput/css/fileinput.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="/components/jquery/dist/jquery.min.js")
+    script(src="/components/bootstrap-fileinput/js/fileinput.min.js")
+    if locale=="ja"
+        script(src="/components/bootstrap-fileinput/js/fileinput_locale_ja.js")
+    script(src='/javascripts/test.js')
+
+  body
+    nav.navbar.navbar-default.navbar-static-top
+        .container-fluid
+            .navbar-header
+                a.navbar-brand(href='/')=__('AppTitle')
+            div
+                ul.nav.navbar-nav
+                    li(class=(menu==='materials' ? 'active' : ''))
+                        a(href="/data?format=html")
+                            =__('Teaching Materials')
+                    li(class=(menu==='content' ? 'active' : ''))
+                        a(href="/display/")
+                            =__('Content Display')
+            div
+                ul.nav.navbar-nav.navbar-right
+                    li
+                        a(href='/?locale='+(locale=='en' ? 'ja' : 'en'))=(locale=='en' ? 'ja' : 'en')
+
+    div.container
+        block content

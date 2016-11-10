@@ -1,0 +1,14 @@
+{
+	"folders":
+	[
+		{
+			"folder_exclude_patterns":
+			[
+				"node_modules",
+				"bower_components",
+				"i_want_this/but not this"
+			],
+			"path": "/Users/lmassloch/Dropbox/Studium/BA/0Server"
+		}
+	]
+}
