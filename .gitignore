@@ -29,6 +29,7 @@ node_modules
 # Debug log from npm
 npm-debug.log
 
+app/app_readme.md
 data/*
 content_display_data/*
 test_content/*

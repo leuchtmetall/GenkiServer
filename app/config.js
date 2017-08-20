@@ -1,4 +1,4 @@
-var developmentMode = true
+var developmentMode = false
 
 var config = {};
 
